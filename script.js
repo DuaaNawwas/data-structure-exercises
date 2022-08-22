@@ -6,28 +6,61 @@
 // "ab(cd{ef}gh)" => true
 // "ab(cd{ef)" => false
 
+// function checkBracketBalance(string) {
+// 	for (let i = 0; i < string.length; i++) {
+// 		if (string[i] == "(" || string[i] == "{" || string[i] == "[") {
+// 			testArr.push(string[i]);
+// 		} else if (
+// 			(testArr[testArr.length - 1] == "(" && string[i] == ")") ||
+// 			(testArr[testArr.length - 1] == "{" && string[i] == "}") ||
+// 			(testArr[testArr.length - 1] == "[" && string[i] == "]")
+// 		) {
+// 			testArr.pop();
+// 		}
+// 	}
+// 	console.log(testArr);
+// 	if (testArr.length != 0) return false;
+
+// 	return true;
+// }
 let testArr = [];
+
+// i have the same problem with this code
 function checkBracketBalance(string) {
 	for (let i = 0; i < string.length; i++) {
-		if (string[i] == "(" || string[i] == "{" || string[i] == "[") {
-			testArr.push(string[i]);
-		} else if (
-			(testArr[testArr.length - 1] == "(" && string[i] == ")") ||
-			(testArr[testArr.length - 1] == "{" && string[i] == "}") ||
-			(testArr[testArr.length - 1] == "[" && string[i] == "]")
-		) {
-			testArr.pop();
+		switch (string[i]) {
+			case "(":
+			case "{":
+			case "[":
+				testArr.push(string[i]);
+				break;
+			case ")":
+				let out = testArr.pop();
+				if (out !== "(") return false;
+				break;
+			case "}":
+				let out2 = testArr.pop();
+				if (out2 !== "{") return false;
+				break;
+			case "]":
+				let out3 = testArr.pop();
+
+				if (out3 !== "[") return false;
+				break;
 		}
 	}
-	console.log(testArr);
-	if (testArr.length != 0) return false;
-
-	return true;
+	// console.log(testArr);
+	if (testArr.length === 0) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 console.log(checkBracketBalance("ab(cd{ef}gh)"));
 console.log(checkBracketBalance("ab(cd{ef)"));
-console.log(checkBracketBalance("({)")); // does not work for some reason!!!
+console.log(checkBracketBalance("({)")); // false
+console.log(checkBracketBalance("({})")); // does not work for some reason!!! returns false
 
 // queue:
 // write a function that takes an integer K and a queue of integers you have to reverse the order
